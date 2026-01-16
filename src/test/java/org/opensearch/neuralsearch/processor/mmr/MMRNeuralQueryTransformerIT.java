@@ -23,13 +23,13 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-import static org.opensearch.knn.common.KNNConstants.CANDIDATES;
-import static org.opensearch.knn.common.KNNConstants.DIVERSITY;
-import static org.opensearch.knn.common.KNNConstants.MMR;
-import static org.opensearch.knn.common.KNNConstants.MODEL_ID;
-import static org.opensearch.knn.common.KNNConstants.VECTOR_FIELD_DATA_TYPE;
-import static org.opensearch.knn.common.KNNConstants.VECTOR_FIELD_PATH;
-import static org.opensearch.knn.common.KNNConstants.VECTOR_FIELD_SPACE_TYPE;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.CANDIDATES;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.DIVERSITY;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.MMR;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.MODEL_ID;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.VECTOR_FIELD_DATA_TYPE;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.VECTOR_FIELD_PATH;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.VECTOR_FIELD_SPACE_TYPE;
 import static org.opensearch.search.pipeline.SearchPipelineService.ENABLED_SYSTEM_GENERATED_FACTORIES_SETTING;
 
 public class MMRNeuralQueryTransformerIT extends BaseNeuralSearchIT {
