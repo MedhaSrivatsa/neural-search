@@ -85,6 +85,7 @@ sourceSets {
             }
         }
     }
+}
 
 // Exclude QA BWC tests that use RescoreContext when using jvector
 subprojects {
@@ -98,7 +99,6 @@ subprojects {
             }
         }
     }
-}
 }
 
 ext.opensearch_tmp_dir = rootProject.file('build/private/opensearch_tmp').absoluteFile
@@ -399,6 +399,19 @@ if (isJVectorEngine) {
     project.tasks.delombok.dependsOn(extractKnnJar)
 }
 
+// Configure delombok to exclude MMR files when using jvector
+// This must be done after the task is created
+afterEvaluate {
+    if (isJVectorEngine) {
+        tasks.named('delombok').configure {
+            // Configure input to exclude MMR files
+            input.setFrom(sourceSets.main.java.matching {
+                exclude '**/processor/mmr/**'
+            })
+        }
+    }
+}
+
 compileJava {
     if (isJVectorEngine) {
         dependsOn extractJvectorJar
@@ -496,19 +509,30 @@ testClusters.integTest {
         configureSecurityPlugin(testClusters.integTest)
     }
 
-    // Install K-NN/ml-commons plugins on the integTest cluster nodes except security
+    // Install plugins on the integTest cluster nodes
+    // When isJVectorEngine=true: install jvector, job-scheduler, ml-plugin (skip knn)
+    // When isJVectorEngine=false: install knn, job-scheduler, ml-plugin (skip jvector)
     configurations.zipArchive.asFileTree.each {
-        plugin(provider(new Callable<RegularFile>(){
-                @Override
-                RegularFile call() throws Exception {
-                    return new RegularFile() {
-                        @Override
-                        File getAsFile() {
-                            return it
+        def shouldInstall = true
+        if (isJVectorEngine && it.name.contains("opensearch-knn")) {
+            shouldInstall = false  // Skip knn when using jvector
+        } else if (!isJVectorEngine && it.name.contains("opensearch-jvector")) {
+            shouldInstall = false  // Skip jvector when using knn
+        }
+
+        if (shouldInstall) {
+            plugin(provider(new Callable<RegularFile>(){
+                    @Override
+                    RegularFile call() throws Exception {
+                        return new RegularFile() {
+                            @Override
+                            File getAsFile() {
+                                return it
+                            }
                         }
                     }
-                }
-        }))
+            }))
+        }
     }
 
     // This installs our neural-search plugin into the testClusters
@@ -694,19 +718,28 @@ task remoteModelIntegTest(type: RestIntegTestTask) {
 testClusters.remoteModelIntegTest {
     testDistribution = "ARCHIVE"
 
-    // Install plugins
+    // Install plugins - conditionally skip knn or jvector based on isJVectorEngine
     configurations.zipArchive.asFileTree.each {
-        plugin(provider(new Callable<RegularFile>(){
-                @Override
-                RegularFile call() throws Exception {
-                    return new RegularFile() {
-                        @Override
-                        File getAsFile() {
-                            return it
+        def shouldInstall = true
+        if (isJVectorEngine && it.name.contains("opensearch-knn")) {
+            shouldInstall = false  // Skip knn when using jvector
+        } else if (!isJVectorEngine && it.name.contains("opensearch-jvector")) {
+            shouldInstall = false  // Skip jvector when using knn
+        }
+
+        if (shouldInstall) {
+            plugin(provider(new Callable<RegularFile>(){
+                    @Override
+                    RegularFile call() throws Exception {
+                        return new RegularFile() {
+                            @Override
+                            File getAsFile() {
+                                return it
+                            }
                         }
                     }
-                }
-        }))
+            }))
+        }
     }
 
     // This installs our neural-search plugin into the testClusters

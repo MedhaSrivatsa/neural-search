@@ -28,8 +28,9 @@ public final class NeuralSearchConstants {
     public static final String DIVERSITY = "diversity";
     public static final String MMR = "mmr";
     public static final String MODEL_ID = "model_id";
-    public static final String VECTOR_FIELD_DATA_TYPE = "vector_data_type";
-    public static final String VECTOR_FIELD_SPACE_TYPE = "space_type";
+
+    public static final String VECTOR_FIELD_DATA_TYPE = "vector_field_data_type";
+    public static final String VECTOR_FIELD_SPACE_TYPE = "vector_field_space_type";
 
     // Engine constants used in dependency validation tests
     public static final String LUCENE_NAME = "lucene";
