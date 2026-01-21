@@ -18,10 +18,11 @@
                 "embedding": {
                   "type": "knn_vector",
                   "dimension": 384,
+                  "doc_values": false,
                   "method": {
-                    "engine": "faiss",
+                    "engine": "jvector",
                     "space_type": "l2",
-                    "name": "hnsw",
+                    "name": "disk_ann",
                     "parameters": {}
                   }
                 },
