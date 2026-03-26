@@ -27,8 +27,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static org.opensearch.knn.common.KNNConstants.TYPE;
-import static org.opensearch.knn.common.KNNConstants.VECTOR_FIELD_PATH;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.TYPE;
+import static org.opensearch.neuralsearch.constants.NeuralSearchConstants.VECTOR_FIELD_PATH;
 import static org.opensearch.knn.search.processor.mmr.MMRUtil.getMMRFieldMappingByPath;
 import static org.opensearch.knn.search.processor.mmr.MMRUtil.resolveKnnVectorFieldInfo;
 import static org.opensearch.neuralsearch.constants.MappingConstants.PATH_SEPARATOR;

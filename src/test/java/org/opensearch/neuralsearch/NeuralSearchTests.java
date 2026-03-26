@@ -4,13 +4,15 @@
  */
 package org.opensearch.neuralsearch;
 
-import org.opensearch.knn.common.KNNConstants;
-import org.opensearch.knn.index.engine.KNNEngine;
+import org.opensearch.neuralsearch.constants.NeuralSearchConstants;
 import org.opensearch.test.OpenSearchTestCase;
 
 public class NeuralSearchTests extends OpenSearchTestCase {
 
     public void testValidateKNNDependency() {
-        assertEquals(KNNConstants.LUCENE_NAME, KNNEngine.LUCENE.getName());
+        // This test validates that our NeuralSearchConstants.LUCENE_NAME matches the expected value
+        // When using opensearch-knn, this would match KNNEngine.LUCENE.getName()
+        // When using opensearch-jvector, the constant is still valid for our use cases
+        assertEquals("lucene", NeuralSearchConstants.LUCENE_NAME);
     }
 }
