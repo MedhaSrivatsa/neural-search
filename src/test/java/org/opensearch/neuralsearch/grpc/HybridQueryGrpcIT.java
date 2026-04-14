@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.opensearch.client.Request;
 import org.opensearch.client.Response;
 import org.opensearch.neuralsearch.BaseNeuralSearchIT;
@@ -348,6 +349,7 @@ public class HybridQueryGrpcIT extends BaseNeuralSearchIT {
      * Test hybrid query with lexical (Match) + neural/vector (KNN) sub-queries.
      * This demonstrates combining traditional text search with vector similarity search.
      */
+    @Ignore("JVector plugin does not include gRPC KNN query converter")
     @SneakyThrows
     public void testHybridQueryWithLexicalAndKnnSubQueries() {
         // Query vector close to doc1's embedding [0.1, 0.2, 0.3]
@@ -368,6 +370,7 @@ public class HybridQueryGrpcIT extends BaseNeuralSearchIT {
     /**
      * Test hybrid query with lexical + KNN + filter to demonstrate full hybrid search capability.
      */
+    @Ignore("JVector plugin does not include gRPC KNN query converter")
     @SneakyThrows
     public void testHybridQueryWithLexicalKnnAndFilter() {
         float[] queryVector = new float[] { 0.4f, 0.5f, 0.6f };
